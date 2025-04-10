@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct clothing_storeApp: App {
+    @StateObject private var coordinator = NavigationCoordinator()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(coordinator)
         }
     }
 }

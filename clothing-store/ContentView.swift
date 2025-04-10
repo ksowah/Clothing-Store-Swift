@@ -8,14 +8,55 @@
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var coordinator: NavigationCoordinator
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        NavigationStack(path: $coordinator.path) {
+            VStack {
+                GetStarted()
+            }
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .productDetailsScreen(let product):
+                    ProductDetailsView(product: product)
+                        .navigationBarBackButtonHidden()
+                case .getStartedScreen:
+                    GetStarted()
+                case .loginScreen:
+                    LoginView()
+                        .navigationBarBackButtonHidden()
+                case .homeScreen:
+                    HomePage()
+                        .navigationBarBackButtonHidden()
+                case .cartScreen:
+                    CartView()
+                        .navigationBarBackButtonHidden()
+                case .onboarding:
+                    OnboardingProcessFlow()
+                        .navigationBarBackButtonHidden()
+                case .homeViewScreen:
+                    HomeView()
+                        .navigationBarBackButtonHidden()
+                case .paymentMethodScreen:
+                    PaymentView()
+                        .navigationBarBackButtonHidden()
+                case .paymentCardInfo:
+                    CardInfoView()
+                        .navigationBarBackButtonHidden()
+                case .deliveryAddressScreen:
+                    DeliveryAddressView()
+                        .navigationBarBackButtonHidden()
+                case .categoryProductsScreen(let category):
+                    CategoryProducts(category: category)
+                        .navigationBarBackButtonHidden()
+                case .orderTrackingScreen:
+                    OrderTrackingView()
+                        .navigationBarBackButtonHidden()
+                case .ordersScreen:
+                    OrdersView()
+                        .navigationBarBackButtonHidden()
+                }
+            }
         }
-        .padding()
     }
 }
 
