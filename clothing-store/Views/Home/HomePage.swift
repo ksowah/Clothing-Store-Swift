@@ -6,27 +6,21 @@
 //
 
 import SwiftUI
+import ClothingStoreAPI
+
 
 struct HomePage: View {
-    
+    @StateObject private var viewModel = ProductsViewModel()
     @State private var searchText = ""
     private let gridItems: [GridItem] = [
         .init(.flexible(), spacing: 6),
         .init(.flexible(), spacing: 6)
     ]
     
-    @State private var selectedCategory: Product.Category = .All
+    @State var selectedCategory: ClothingStoreAPI.Category?
+    
     @EnvironmentObject var router: NavigationCoordinator
     
-    var filteredProducts: [Product] {
-        if selectedCategory == .All {
-            return Product.MOCK_PRODUCTS
-        } else {
-            return Product.MOCK_PRODUCTS.filter { product in
-                product.category == selectedCategory
-            }
-        }
-    }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -53,7 +47,13 @@ struct HomePage: View {
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach(Product.Category.allCases, id: \.self) { category in
+                    Button {
+                        selectedCategory = nil
+                    } label: {
+                        CategoryRowItem(isActive: selectedCategory == nil)
+                    }
+
+                    ForEach(ClothingStoreAPI.Category.allCases, id: \.self) { category in
                         Button {
                             selectedCategory = category
                         } label: {
@@ -63,20 +63,43 @@ struct HomePage: View {
                     }
                 }
             }
-            .padding(.bottom)
+            .padding(.vertical)
             
             LazyVGrid(columns: gridItems) {
-                ForEach(filteredProducts){ product in
-                    Button {
-                        router.push(.productDetailsScreen(product: product))
-                    } label: {
-                        ProductItem(product: product)
+                if viewModel.activeRequest == nil {
+                    ForEach(viewModel.products, id: \.self){ product in
+                        Button {
+                            router.push(.productDetailsScreen(productId: product._id))
+                        } label: {
+                            ProductItem(product: product)
+                        }
+                        
                     }
-                    
+                } else {
+                    ForEach(0..<2, id: \.self) {idx in
+                        ProductsLoader()
+                    }
                 }
             }
             .padding(.horizontal, 8)
+            
+//            if viewModel.currentPage < viewModel.totalPages {
+//                ProgressView()
+//                    .padding(.vertical, 10)
+//                    .onAppear {
+//                        viewModel.loadMoreProducts(from: selectedCategory)
+//                    }
+//            }
 
+        }
+        .onChange(of: selectedCategory){ newCategory in
+            viewModel.products = []
+            viewModel.currentPage = 1
+            viewModel.totalPages = 1
+            viewModel.loadProducts(from: newCategory)
+        }
+        .task {
+            viewModel.loadProducts(from: selectedCategory)
         }
     }
 }

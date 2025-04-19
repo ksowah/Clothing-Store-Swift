@@ -10,6 +10,7 @@ import SwiftUI
 struct PaymentView: View {
     @State var selectedPaymentType: PaymentMethod.PaymentMethodType?
     @EnvironmentObject var router: NavigationCoordinator
+    @EnvironmentObject var cartViewModel: CartViewModel
     
     var body: some View {
         VStack {
@@ -24,9 +25,9 @@ struct PaymentView: View {
                             PaymentCard(isSelected: selectedPaymentType == method.type, title: method.title, image: method.image)
                         }
                         .foregroundColor(.black)
-
                     }
                 }
+                .padding(.top)
                 
                 HStack {
                     Text("Cart Items")
@@ -38,15 +39,17 @@ struct PaymentView: View {
                 }
                 
                 VStack {
-                    CartItem()
-                    CartItem()
-                    CartItem()
+                    ForEach(cartViewModel.cartItems) { item in
+                        CartItemView(item: item)
+                    }
                 }
                 .padding()
             }
             
             Button {
-                router.push(.paymentCardInfo)
+                if selectedPaymentType != nil {
+                    router.push(.paymentCardInfo)
+                }
             } label: {
                 HStack {
                     Text("Continue")
@@ -59,10 +62,11 @@ struct PaymentView: View {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(.black)
+                .background(.black.opacity(selectedPaymentType == nil ? 0.6 : 1))
                 .cornerRadius(20)
                 .padding(.horizontal, 16)
             }
+            .disabled(selectedPaymentType == nil)
             .padding(.vertical, 10)
         }
         .navigationBarTitle("Payment Method")

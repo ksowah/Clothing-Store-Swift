@@ -18,6 +18,8 @@ struct AppTextField: View {
     var borderColor: Color = .gray
     var accentColor: Color = .blue
     var isPassword: Bool = false
+    var autocapitalization: TextInputAutocapitalization = .sentences
+    var disableAutocorrection: Bool? = nil
     
     @State private var showPassword: Bool = false
     
@@ -39,11 +41,17 @@ struct AppTextField: View {
                     if isPassword {
                         if showPassword {
                             TextField(placeholder, text: $text)
+                                .textInputAutocapitalization(autocapitalization)
+                                .disableAutocorrection(disableAutocorrection)
                         } else {
                             SecureField(placeholder, text: $text)
+                                .textInputAutocapitalization(autocapitalization)
+                                .disableAutocorrection(disableAutocorrection)
                         }
                     } else {
                         TextField(placeholder, text: $text)
+                            .textInputAutocapitalization(autocapitalization)
+                            .disableAutocorrection(disableAutocorrection)
                     }
                 }
                 .font(font)

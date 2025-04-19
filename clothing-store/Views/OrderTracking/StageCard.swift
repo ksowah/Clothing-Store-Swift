@@ -8,9 +8,13 @@
 import SwiftUI
 
 struct StageCard: View {
+    var icon = "car.fill"
+    var stage = "Accepted"
+    var reached: Bool = false
+    
     var body: some View {
         HStack {
-            Image(systemName: "car.fill")
+            Image(systemName: icon)
                 .frame(width: 50, height: 50)
                 .background(Color.gray.opacity(0.4))
                 .cornerRadius(10)
@@ -26,10 +30,10 @@ struct StageCard: View {
             
             Spacer()
             
-            Text("Delivered")
+            Text(stage)
                 .font(.subheadline)
                 .fontWeight(.bold)
-                .foregroundColor(Color.gray.opacity(0.5))
+                .foregroundColor(reached ? .black : .gray.opacity(0.5))
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: 110)

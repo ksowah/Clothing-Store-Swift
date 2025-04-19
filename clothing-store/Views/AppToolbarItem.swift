@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct AppToolbarItem: View {
+    @EnvironmentObject var cartViewModel: CartViewModel
+    
     var icon: String
-    var count: Int?
+    @State var showCount: Bool = false
+
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -23,14 +26,14 @@ struct AppToolbarItem: View {
                     .font(.system(size: 15))
             }
             
-            if let count = count {
-                if count > 0 {
+            if showCount {
+                if cartViewModel.cartItems.count > 0 {
                     ZStack {
                         RoundedRectangle(cornerRadius: 10)
                             .fill(.black)
                             .frame(width: 20, height: 20)
                         
-                        Text("\(count)")
+                        Text("\(cartViewModel.cartItems.count)")
                             .font(.system(size: 8, weight: .bold))
                             .foregroundColor(.white)
                     }
@@ -44,7 +47,7 @@ struct AppToolbarItem: View {
 
 struct AppToolbarItem_Previews: PreviewProvider {
     static var previews: some View {
-        AppToolbarItem(icon: "line.3.horizontal", count: 3)
+        AppToolbarItem(icon: "line.3.horizontal")
     }
 }
 

@@ -8,7 +8,7 @@
 import SwiftUI
 
 
-struct Category: View {
+struct CategoryType: View {
     var item: CategoryItem
     var index: Int
     
@@ -49,8 +49,8 @@ struct Category: View {
     }
 }
 
-struct Category_Previews: PreviewProvider {
+struct CategoryType_Previews: PreviewProvider {
     static var previews: some View {
-        Category(item: CategoryItem(image: "f6", title: "New Arrivals", subtitle: "208 Products", category: .NewArrivals), index: 1)
+        CategoryType(item: CategoryItem(image: "f6", title: "New Arrivals", subtitle: "208 Products", category: .newArrivals), index: 1)
     }
 }

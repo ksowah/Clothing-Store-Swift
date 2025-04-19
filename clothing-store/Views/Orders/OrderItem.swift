@@ -6,36 +6,46 @@
 //
 
 import SwiftUI
+import ClothingStoreAPI
+import SDWebImageSwiftUI
 
 struct OrderItem: View {
+    @State var orderItem: OrderListQuery.Data.Order.Item?
+    
     var body: some View {
         HStack {
-            Image("f4")
-                .resizable()
-                .scaledToFit()
+            if let orderItem = orderItem {
+                WebImage(url: URL(string: orderItem.product?.previewImage ?? "")) { image in
+                    image.resizable()
+                } placeholder: {
+                    Image("")
+                }
+                .indicator(.activity)
+                .scaledToFill()
                 .cornerRadius(10)
                 .frame(width: 110, height: 110)
-            
-            VStack(alignment: .leading) {
-                Text("Soludos")
-                    .font(.subheadline)
+                
+                VStack(alignment: .leading) {
+                    Text(orderItem.product?.name ?? "")
+                        .font(.subheadline)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                        .padding(.bottom, 1)
+                    Text(orderItem.product?.description ?? "")
+                    Text("Brand: \(orderItem.product?.brand ?? "")")
+                    Text("Quantity: \(orderItem.quantity)")
+                }
+                .multilineTextAlignment(.leading)
+                .font(.caption)
+                .foregroundColor(Color(.systemGray2))
+                
+                Spacer()
+                
+                Text("\(orderItem.product?.price ?? 0, format: .currency(code: "USD"))")
+                    .font(.headline)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
-                    .padding(.bottom, 1)
-                Text("Ibiza classic lace sneakers")
-                Text("Quality: 1")
-                Text("Size: 42")
             }
-            .multilineTextAlignment(.leading)
-            .font(.caption)
-            .foregroundColor(Color(.systemGray2))
-            
-            Spacer()
-            
-            Text("$120.00")
-                .font(.headline)
-                .fontWeight(.bold)
-                .foregroundColor(.black)
             
         }
         .frame(maxWidth: .infinity, maxHeight: 120)
@@ -48,8 +58,8 @@ struct OrderItem: View {
     }
 }
 
-struct OrderItem_Previews: PreviewProvider {
-    static var previews: some View {
-        OrderItem()
-    }
-}
+//struct OrderItem_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OrderItem()
+//    }
+//}

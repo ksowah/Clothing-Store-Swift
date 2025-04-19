@@ -6,39 +6,61 @@
 //
 
 import SwiftUI
+import ClothingStoreAPI
 
 struct OrdersView: View {
     @State private var selectedTab = 0
     @EnvironmentObject var router: NavigationCoordinator
-    let tabs = ["Ongoing", "Completed"]
+    let tabs = [ClothingStoreAPI.OrderStatus.pending, ClothingStoreAPI.OrderStatus.cancelled]
+    @StateObject var orderViewModel: OrdersViewModel
+    
+    init (cartViewModel: CartViewModel) {
+        _orderViewModel = StateObject(wrappedValue: OrdersViewModel(cartViewModel: cartViewModel))
+    }
     
     var body: some View {
         VStack {
             Picker("Tabs", selection: $selectedTab) {
                 ForEach(0..<tabs.count, id: \.self) { index in
-                    Text(tabs[index]).tag(index)
+                    Text(tabs[index].rawValue).tag(index)
                 }
             }
             .pickerStyle(.segmented)
             .padding()
-
-            Spacer()
+            .onChange(of: selectedTab) { newIndex in
+                orderViewModel.getOrders(status: tabs[newIndex])
+            }
             
             // Display content based on selected tab
-            Group {
-                if selectedTab == 0 {
-                    ScrollView(showsIndicators: false) {
-                        OngoingOrders()
-                    }
-                } else if selectedTab == 1 {
-                    ScrollView(showsIndicators: false) {
-                        CompletedOrders()
+            if orderViewModel.getOrdersActiveRequest == nil {
+                Group {
+                    if orderViewModel.orderItems.isEmpty {
+                        EmptyStateView(title: "No Order Placed", subtitle: "You haven't placed any order here yet")
+                    } else {
+                        ScrollView(showsIndicators: false) {
+                            ForEach(orderViewModel.orderItems, id: \.self) { order in
+                                ForEach(order?.items ?? [], id: \.self){ item in
+                                    Button {
+                                        router.push(.orderTrackingScreen)
+                                    } label: {
+                                        OrderItem(orderItem: item)
+                                    }
+                                }
+                            }
+                        }
+                        .padding()
                     }
                 }
+            } else {
+                OrderListLoader()
+                OrderListLoader()
             }
 
             Spacer()
         }
+        .task({
+            orderViewModel.getOrders(status: tabs[selectedTab])
+        })
         .navigationTitle("Orders")
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -55,6 +77,7 @@ struct OrdersView: View {
 
 struct OrdersView_Previews: PreviewProvider {
     static var previews: some View {
-        OrdersView()
+        let cartViewModel = CartViewModel()
+        OrdersView(cartViewModel: cartViewModel)
     }
 }

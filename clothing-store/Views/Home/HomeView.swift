@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeView: View {
     @State private var selectedTab: Tabs = .home
     @EnvironmentObject var router: NavigationCoordinator
+    @EnvironmentObject var cartViewModel: CartViewModel
     
     init() {
         UITabBar.appearance().isHidden = true
@@ -25,15 +26,16 @@ struct HomeView: View {
                     CategoriesView()
                         .tag(Tabs.categories)
                     
-                    OrdersView()
+                    OrdersView(cartViewModel: cartViewModel)
                         .bold()
                         .tag(Tabs.orders)
                     
-                    Text("Profile")
+                    ProfileView()
                         .bold()
                         .tag(Tabs.profile)
                 }
             }
+            .padding(.bottom, 55)
             
             VStack {
                 Spacer()
@@ -49,11 +51,10 @@ struct HomeView: View {
                 Button {
                     router.push(.cartScreen)
                 } label: {
-                    AppToolbarItem(icon: "basket", count: 2)
+                    AppToolbarItem(icon: "basket", showCount: true)
                 }
             }
         }
-        .badge(3)
     }
 }
 

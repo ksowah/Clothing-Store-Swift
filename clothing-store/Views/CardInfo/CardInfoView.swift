@@ -12,8 +12,15 @@ struct CardInfoView: View {
     @State private var cardNumber: String = ""
     @State private var expiryDate: String = ""
     @State private var cvv: String = ""
-    @State var showSuccess = false
+    
     @EnvironmentObject var router: NavigationCoordinator
+    @EnvironmentObject var cartViewModel: CartViewModel
+    
+    @StateObject var orderViewModel: OrdersViewModel
+    
+    init (cartViewModel: CartViewModel) {
+        _orderViewModel = StateObject(wrappedValue: OrdersViewModel(cartViewModel: cartViewModel))
+    }
     
     var body: some View {
         ZStack {
@@ -99,15 +106,15 @@ struct CardInfoView: View {
                     Spacer()
                     
                     Button {
-                        showSuccess = true
+                        orderViewModel.placeOrder()
                     } label: {
-                        AppButton(title: "Confirm",width: 200)
+                        AppButton(title: "Confirm",width: 200, loading: orderViewModel.activeRequest != nil)
                     }
                 }
                 .padding()
             }
             
-            if showSuccess {
+            if orderViewModel.isOrderPlacedSuccess {
                 Rectangle()
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .ignoresSafeArea()
@@ -115,12 +122,11 @@ struct CardInfoView: View {
                     .opacity(0.6)
                     .transition(.opacity)
                     .onTapGesture {
-                        showSuccess = false
+                        orderViewModel.isOrderPlacedSuccess = false
                     }
-                    .animation(.default, value: showSuccess)
             }
             
-            if showSuccess {
+            if orderViewModel.isOrderPlacedSuccess {
                 CardPaymentSuccess()
                     .transition(.scale)
             }
@@ -179,10 +185,14 @@ struct CardInfoView: View {
         formatter.dateFormat = "MM/yy"
         return formatter.string(from: date)
     }
+    
+    
+
 }
 
 struct CardInfoView_Previews: PreviewProvider {
     static var previews: some View {
-        CardInfoView()
+        let cartViewModel = CartViewModel()
+        CardInfoView(cartViewModel: cartViewModel)
     }
 }

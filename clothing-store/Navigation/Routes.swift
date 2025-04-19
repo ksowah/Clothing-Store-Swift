@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ClothingStoreAPI
 
 enum Route: Hashable {
     case getStartedScreen
@@ -14,11 +15,12 @@ enum Route: Hashable {
     case homeViewScreen
     case cartScreen
     case onboarding
-    case productDetailsScreen(product: Product)
+    case productDetailsScreen(productId: String)
     case paymentMethodScreen
     case paymentCardInfo
     case deliveryAddressScreen
-    case categoryProductsScreen(category: Product.Category)
+    case categoryProductsScreen(category: ClothingStoreAPI.Category)
     case orderTrackingScreen
     case ordersScreen
+    case signUpScreen
 }

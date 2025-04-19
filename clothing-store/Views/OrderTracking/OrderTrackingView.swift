@@ -38,7 +38,7 @@ struct OrderTrackingView: View {
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("25 June, 2021")
+                        Text("25 April, 2025")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Text("Sacramato")
@@ -49,7 +49,7 @@ struct OrderTrackingView: View {
                     Spacer()
                     
                     VStack(alignment: .leading) {
-                        Text("25 June, 2021")
+                        Text("29 April, 2025")
                             .font(.caption)
                             .foregroundColor(.gray)
                         Text("Sacramato")
@@ -71,10 +71,9 @@ struct OrderTrackingView: View {
                 .fontWeight(.bold)
             
             VStack(alignment: .leading, spacing: 10) {
-                StageCard()
-                StageCard()
-                StageCard()
-                StageCard()
+                StageCard(stage: "Delivered")
+                StageCard(icon: "airplane.departure", stage: "Transit", reached: true)
+                StageCard(icon: "checkmark.seal", reached: true)
             }
             Spacer()
         }

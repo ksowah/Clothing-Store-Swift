@@ -1,0 +1,4 @@
+
+query RootQuery {
+  getRoot
+}

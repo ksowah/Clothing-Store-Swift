@@ -11,7 +11,10 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @Environment(\.dismiss) var dismiss
+    
     @EnvironmentObject var router: NavigationCoordinator
+    @StateObject var loginViewModel = LoginViewModel()
+    
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -39,8 +42,8 @@ struct LoginView: View {
                         .padding(.bottom, 20)
                 }
                 
-                AppTextField(label: "Email", text: $email, placeholder: "eg. sowahkelvin64@gmail.com")
-                AppTextField(label: "Password", text: $password, placeholder: "Enter Password", isPassword: true)
+                AppTextField(label: "Email", text: $email, placeholder: "eg. sowahkelvin64@gmail.com", autocapitalization: .never, disableAutocorrection: true)
+                AppTextField(label: "Password", text: $password, placeholder: "Enter Password", isPassword: true, autocapitalization: .never, disableAutocorrection: true)
                 
             }
             .padding(.vertical, 20)
@@ -49,10 +52,15 @@ struct LoginView: View {
             
             Group{
                 Button {
-                    router.push(.homeViewScreen)
+                    loginViewModel.login(with: email, and: password)
                 } label: {
-                    AppButton(title: "Login")
+                    AppButton(title: "Login", loading: loginViewModel.activeRequest != nil)
                         .padding(.bottom, 20)
+                }
+                .onChange(of: loginViewModel.userLoginSccess) { success in
+                    if success {
+                        router.push(.homeViewScreen)
+                    }
                 }
             }
             .frame(maxWidth: .infinity)
@@ -69,6 +77,9 @@ struct LoginView: View {
             .foregroundColor(.gray)
             .frame(maxWidth: .infinity)
             .padding(.bottom)
+            .onTapGesture {
+                router.push(.signUpScreen)
+            }
         }
         .padding()
     }

@@ -9,15 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject var coordinator: NavigationCoordinator
+    @EnvironmentObject var cartViewModel: CartViewModel
+    @StateObject private var viewModel = ContentViewModel()
+    @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
+    
     var body: some View {
         NavigationStack(path: $coordinator.path) {
             VStack {
-                GetStarted()
+                if isLoggedIn {
+                    HomeView()
+                } else {
+                    GetStarted()
+                }
             }
             .navigationDestination(for: Route.self) { route in
                 switch route {
-                case .productDetailsScreen(let product):
-                    ProductDetailsView(product: product)
+                case .productDetailsScreen(let productId):
+                    ProductDetailsView(productId: productId)
                         .navigationBarBackButtonHidden()
                 case .getStartedScreen:
                     GetStarted()
@@ -40,7 +48,7 @@ struct ContentView: View {
                     PaymentView()
                         .navigationBarBackButtonHidden()
                 case .paymentCardInfo:
-                    CardInfoView()
+                    CardInfoView(cartViewModel: cartViewModel)
                         .navigationBarBackButtonHidden()
                 case .deliveryAddressScreen:
                     DeliveryAddressView()
@@ -52,10 +60,16 @@ struct ContentView: View {
                     OrderTrackingView()
                         .navigationBarBackButtonHidden()
                 case .ordersScreen:
-                    OrdersView()
+                    OrdersView(cartViewModel: cartViewModel)
+                        .navigationBarBackButtonHidden()
+                case .signUpScreen:
+                    SignupView()
                         .navigationBarBackButtonHidden()
                 }
             }
+        }
+        .onAppear {
+            viewModel.checkServerConnection()
         }
     }
 }

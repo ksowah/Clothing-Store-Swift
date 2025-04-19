@@ -1,0 +1,25 @@
+
+query OrderList($status: OrderStatus) {
+  orders: getOrders(status: $status) {
+    _id
+    code
+    status
+    user {
+      _id
+    }
+    items {
+      product {
+        _id
+        brand
+        category
+        code
+        description
+        previewImage
+        name
+        price
+      }
+      quantity
+    }
+    totalPrice
+  }
+}

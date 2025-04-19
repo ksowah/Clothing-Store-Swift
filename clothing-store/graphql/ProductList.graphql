@@ -1,0 +1,16 @@
+query ProductList($pagination: Pagination, $category: Category) {
+  products: getProducts(pagination: $pagination, category: $category) {
+    _id
+    code
+    name
+    description
+    images
+    previewImage
+    brand
+    category
+    price
+    createdAt
+    updatedAt
+  }
+  count: getProductsCount
+}

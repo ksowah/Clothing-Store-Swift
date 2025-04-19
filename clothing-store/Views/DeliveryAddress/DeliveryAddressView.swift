@@ -9,60 +9,63 @@ import SwiftUI
 
 struct DeliveryAddressView: View {
     @EnvironmentObject var router: NavigationCoordinator
+    @EnvironmentObject var cartViewModel: CartViewModel
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading) {
-                AddressCard()
-                    .padding()
-                
-                Text("Product Item")
-                    .font(.headline)
-                    .fontWeight(.bold)
-                    .padding(.horizontal)
-                
-                CartItem()
-                CartItem()
-                CartItem()
-                
-                HStack {
-                    VStack {
-                        Text("Total Price")
-                            .font(.caption)
-                            .foregroundColor(.gray)
-                        
-                        Text("$120.00")
-                            .fontWeight(.bold)
+        VStack {
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading) {
+                    AddressCard()
+                        .padding()
+                    
+                    Text("Product Item")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                        .padding(.horizontal)
+                    
+                    ForEach(cartViewModel.cartItems) { item in
+                        CartItemView(item: item)
                     }
                     
-                    Spacer()
-                    
+                }
+            }
+            .navigationBarTitle("Delivery Address")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button {
-                        router.push(.paymentMethodScreen)
+                        router.pop()
                     } label: {
-                        Text("Place Order")
-                            .font(.subheadline)
-                            .fontWeight(.medium)
-                            .frame(width: 160, height: 40)
-                            .foregroundColor(.white)
-                            .background(.black)
-                            .cornerRadius(20)
+                        AppToolbarItem(icon: "arrow.backward")
                     }
 
                 }
-                .padding()
+        }
+            
+        HStack {
+            VStack {
+                Text("Total Price")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                
+                Text(String(format: "$%.2f", cartViewModel.totalPrice))
+                    .fontWeight(.bold)
+            }
+            
+            Spacer()
+            
+            Button {
+                router.push(.paymentMethodScreen)
+            } label: {
+                Text("Place Order")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .frame(width: 160, height: 40)
+                    .foregroundColor(.white)
+                    .background(.black)
+                    .cornerRadius(20)
             }
         }
-        .navigationBarTitle("Delivery Address")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button {
-                    router.pop()
-                } label: {
-                    AppToolbarItem(icon: "arrow.backward")
-                }
-
-            }
+        .padding()
         }
     }
 }

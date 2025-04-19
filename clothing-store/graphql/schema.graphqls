@@ -1,0 +1,271 @@
+"""
+Indicates exactly one field must be supplied and this field must not be `null`.
+"""
+directive @oneOf on INPUT_OBJECT
+
+type User {
+  _id: ID!
+  code: String
+  fullName: String
+  username: String
+  profileImage: String
+  phoneNumber: String
+  emailAddress: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input UpdateUserInput {
+  code: String
+  fullName: String
+  phoneNumber: String
+  profileImage: String
+  emailAddress: String
+}
+
+type Query {
+  getUsers(pagination: Pagination, search: Search, sort: String): [User]
+  getUser(id: ID!): User
+  getUsersCount(search: Search): Int
+  getRoot: String
+  getProducts(pagination: Pagination, search: Search, sort: String, category: Category): [Product]
+  getProduct(id: ID!): Product
+  getProductsCount(search: Search): NonNegativeInt
+  getOrders(pagination: Pagination, search: Search, sort: String, status: OrderStatus): [Order]
+  getOrder(id: ID!): Order
+  getOrdersCount(search: Search): NonNegativeInt
+}
+
+type Mutation {
+  updateUser(id: ID!, input: UpdateUserInput!): User
+  deleteUser(id: ID!): Boolean
+  createProduct(name: String!, description: String!, images: [String]!, previewImage: String!, brand: String!, category: Category!, price: Float!): Product
+  updateProduct(id: ID!, name: String!, description: String!, images: [String]!, previewImage: String!, brand: String!, category: Category!, price: Float!): Product
+  placeOrder(input: OrderInput!): Order
+  updateOrder(id: ID!, products: [ID!]!, totalPrice: Float!): Order
+  cancelOrder(id: ID!): Order
+  completeOrder(id: ID!): Order
+  initiateOrderTransit(id: ID!): Order
+  deliverOrder(id: ID!): Order
+  loginUser(emailAddress: String!, password: String!): LoginResponse
+  registerUser(input: RegisterUserInput!): User
+}
+
+input Pagination {
+  page: Int
+  pageSize: Int
+}
+
+input Search {
+  search: String
+  searchFields: [String]
+}
+
+enum Category {
+  NewArrivals
+  Cloths
+  Shoes
+  Bags
+  Electronics
+  Jewelry
+}
+
+type Product {
+  _id: ID!
+  code: String
+  name: String
+  description: String
+  images: [String]
+  previewImage: String
+  brand: String
+  category: Category
+  price: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+enum OrderStatus {
+  Pending
+  Accepted
+  Transit
+  Delivered
+  Cancelled
+  Completed
+}
+
+type OrderItem {
+  product: Product
+  quantity: Int!
+}
+
+type Order {
+  _id: ID!
+  code: String
+  status: OrderStatus
+  user: User
+  items: [OrderItem]
+  totalPrice: Float
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input OrderInput {
+  items: [OrderItemInput!]!
+  totalPrice: Float!
+}
+
+input OrderItemInput {
+  product: ID!
+  quantity: Int!
+}
+
+type LoginResponse {
+  user: User
+  token: String
+}
+
+input RegisterUserInput {
+  fullName: String!
+  username: String!
+  emailAddress: String!
+  password: String!
+  phoneNumber: String!
+}
+
+scalar AccountNumber
+
+scalar BigInt
+
+scalar Byte
+
+scalar CountryCode
+
+scalar CountryName
+
+scalar Cuid
+
+scalar Currency
+
+scalar Date
+
+scalar DateTime
+
+scalar DateTimeISO
+
+scalar DeweyDecimal
+
+scalar DID
+
+scalar Duration
+
+scalar EmailAddress
+
+scalar GeoJSON
+
+scalar GUID
+
+scalar Hexadecimal
+
+scalar HexColorCode
+
+scalar HSL
+
+scalar HSLA
+
+scalar IBAN
+
+scalar IP
+
+scalar IPCPatent
+
+scalar IPv4
+
+scalar IPv6
+
+scalar ISBN
+
+scalar ISO8601Duration
+
+scalar JSON
+
+scalar JSONObject
+
+scalar JWT
+
+scalar Latitude
+
+scalar LCCSubclass
+
+scalar LocalDate
+
+scalar LocalDateTime
+
+scalar Locale
+
+scalar LocalEndTime
+
+scalar LocalTime
+
+scalar Long
+
+scalar Longitude
+
+scalar MAC
+
+scalar NegativeFloat
+
+scalar NegativeInt
+
+scalar NonEmptyString
+
+scalar NonNegativeFloat
+
+scalar NonNegativeInt
+
+scalar NonPositiveFloat
+
+scalar NonPositiveInt
+
+scalar ObjectID
+
+scalar PhoneNumber
+
+scalar Port
+
+scalar PositiveFloat
+
+scalar PositiveInt
+
+scalar PostalCode
+
+scalar RGB
+
+scalar RGBA
+
+scalar RoutingNumber
+
+scalar SafeInt
+
+scalar SemVer
+
+scalar SESSN
+
+scalar Time
+
+scalar Timestamp
+
+scalar TimeZone
+
+scalar UnsignedFloat
+
+scalar UnsignedInt
+
+scalar URL
+
+scalar USCurrency
+
+scalar UtcOffset
+
+scalar UUID
+
+scalar Void

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct OrderStep: Identifiable {
-    var id = UUID()
-    var icon: String
-    var title: String
+    @State var id = UUID()
+    @State var icon: String
+    @State var title: String
 }
 
 struct OrderStage: View {

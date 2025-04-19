@@ -14,37 +14,37 @@ struct CategoriesView: View {
             image: "f6",
             title: "New Arrivals",
             subtitle: "208 Products",
-            category: .NewArrivals
+            category: .newArrivals
         ),
         CategoryItem(
             image: "f7",
             title: "Cloths",
             subtitle: "385 Products",
-            category: .Cloths
+            category: .cloths
         ),
         CategoryItem(
             image: "f8",
             title: "Bags",
             subtitle: "160 Products",
-            category: .Bags
+            category: .bags
         ),
         CategoryItem(
             image: "f9",
             title: "Shoes",
             subtitle: "290 Products",
-            category: .Shoes
+            category: .shoes
         ),
         CategoryItem(
             image: "f10",
             title: "Electronics",
             subtitle: "230 Products",
-            category: .Electronics
+            category: .electronics
         ),
         CategoryItem(
             image: "f11",
             title: "Jewelry",
             subtitle: "92 Products",
-            category: .Jewelry
+            category: .jewelry
         ),
     ]
     
@@ -55,7 +55,7 @@ struct CategoriesView: View {
                     Button {
                         router.push(.categoryProductsScreen(category: item.category))
                     } label: {
-                        Category(item: item, index: idx)
+                        CategoryType(item: item, index: idx)
                     }
 
                 }
