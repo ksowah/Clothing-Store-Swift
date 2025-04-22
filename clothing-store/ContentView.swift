@@ -10,7 +10,6 @@ import SwiftUI
 struct ContentView: View {
     @EnvironmentObject var coordinator: NavigationCoordinator
     @EnvironmentObject var cartViewModel: CartViewModel
-    @StateObject private var viewModel = ContentViewModel()
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     
     var body: some View {
@@ -67,9 +66,6 @@ struct ContentView: View {
                         .navigationBarBackButtonHidden()
                 }
             }
-        }
-        .onAppear {
-            viewModel.checkServerConnection()
         }
     }
 }

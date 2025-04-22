@@ -24,6 +24,7 @@ struct ProfileView: View {
     ]
     
     @EnvironmentObject var router: NavigationCoordinator
+    @StateObject var contentViewModel = ContentViewModel()
     
     @AppStorage("isLoggedIn") var isLoggedIn: Bool = false
     let keychain = KeychainSwift()
@@ -38,10 +39,10 @@ struct ProfileView: View {
                     .cornerRadius(14)
                 
                 VStack(alignment: .leading) {
-                    Text("Kelvin Sowah")
+                    Text(contentViewModel.currentUser?.fullName ?? "Kelvin Sowah")
                         .font(.headline)
                         .fontWeight(.bold)
-                    Text(verbatim: "sowahkelvin640@gmail.com")
+                    Text(verbatim: contentViewModel.currentUser?.emailAddress ?? "sowahkelvin640@gmail.com")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }

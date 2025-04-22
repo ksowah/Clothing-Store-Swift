@@ -20,8 +20,7 @@ struct ProductItem: View {
                     WebImage(url: URL(string: product.previewImage ?? "")) { image in
                         image.resizable()
                     } placeholder: {
-                        Rectangle()
-                            .background(Color.gray.opacity(0.6))
+                        Image("")
                     }
                      .indicator(.activity)
                      .scaledToFill()

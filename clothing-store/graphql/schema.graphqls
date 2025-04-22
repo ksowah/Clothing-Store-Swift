@@ -34,6 +34,7 @@ type Query {
   getOrders(pagination: Pagination, search: Search, sort: String, status: OrderStatus): [Order]
   getOrder(id: ID!): Order
   getOrdersCount(search: Search): NonNegativeInt
+  getCurrentUser: User
 }
 
 type Mutation {

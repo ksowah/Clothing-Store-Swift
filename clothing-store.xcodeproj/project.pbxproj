@@ -78,6 +78,7 @@
 		FAD4C6FB2DB4234D001459C3 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD4C6FA2DB4234D001459C3 /* SignupView.swift */; };
 		FAD4C6FD2DB44943001459C3 /* RegisterUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = FAD4C6FC2DB44943001459C3 /* RegisterUser.graphql */; };
 		FAD4C6FF2DB44982001459C3 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD4C6FE2DB44982001459C3 /* SignupViewModel.swift */; };
+		FAD4C7012DB4580E001459C3 /* CurrentUser.graphql in Resources */ = {isa = PBXBuildFile; fileRef = FAD4C7002DB4580E001459C3 /* CurrentUser.graphql */; };
 		FADCBA442DA7DAF8001110E8 /* clothing_storeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCBA432DA7DAF8001110E8 /* clothing_storeApp.swift */; };
 		FADCBA462DA7DAF8001110E8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADCBA452DA7DAF8001110E8 /* ContentView.swift */; };
 		FADCBA482DA7DAFA001110E8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FADCBA472DA7DAFA001110E8 /* Assets.xcassets */; };
@@ -158,6 +159,7 @@
 		FAD4C6FA2DB4234D001459C3 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		FAD4C6FC2DB44943001459C3 /* RegisterUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = RegisterUser.graphql; sourceTree = "<group>"; };
 		FAD4C6FE2DB44982001459C3 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		FAD4C7002DB4580E001459C3 /* CurrentUser.graphql */ = {isa = PBXFileReference; lastKnownFileType = text; path = CurrentUser.graphql; sourceTree = "<group>"; };
 		FADCBA402DA7DAF8001110E8 /* clothing-store.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "clothing-store.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FADCBA432DA7DAF8001110E8 /* clothing_storeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = clothing_storeApp.swift; sourceTree = "<group>"; };
 		FADCBA452DA7DAF8001110E8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				FA0261DA2DB284D400CCAA5D /* Login.graphql */,
 				FA0261E02DB2B19400CCAA5D /* OrderList.graphql */,
 				FAD4C6FC2DB44943001459C3 /* RegisterUser.graphql */,
+				FAD4C7002DB4580E001459C3 /* CurrentUser.graphql */,
 			);
 			path = graphql;
 			sourceTree = "<group>";
@@ -583,6 +586,7 @@
 				FA06C2CF2DA814C800A31D51 /* ProductList.graphql in Resources */,
 				FA06C2B72DA7F91300A31D51 /* Root.graphql in Resources */,
 				FA0261DB2DB284D400CCAA5D /* Login.graphql in Resources */,
+				FAD4C7012DB4580E001459C3 /* CurrentUser.graphql in Resources */,
 				FA0261D92DB27F1700CCAA5D /* PlaceOrder.graphql in Resources */,
 				FA0261E12DB2B19400CCAA5D /* OrderList.graphql in Resources */,
 				FADCBA4B2DA7DAFA001110E8 /* Preview Assets.xcassets in Resources */,

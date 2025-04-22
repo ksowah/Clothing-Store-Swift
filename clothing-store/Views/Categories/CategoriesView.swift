@@ -23,28 +23,28 @@ struct CategoriesView: View {
             category: .cloths
         ),
         CategoryItem(
-            image: "f8",
+            image: "bag",
             title: "Bags",
             subtitle: "160 Products",
             category: .bags
         ),
         CategoryItem(
-            image: "f9",
+            image: "shoe",
             title: "Shoes",
             subtitle: "290 Products",
             category: .shoes
         ),
         CategoryItem(
-            image: "f10",
-            title: "Electronics",
-            subtitle: "230 Products",
-            category: .electronics
-        ),
-        CategoryItem(
-            image: "f11",
+            image: "jewelry",
             title: "Jewelry",
             subtitle: "92 Products",
             category: .jewelry
+        ),
+        CategoryItem(
+            image: "electronic",
+            title: "Electronics",
+            subtitle: "230 Products",
+            category: .electronics
         ),
     ]
     
