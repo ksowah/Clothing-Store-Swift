@@ -26,8 +26,10 @@
 - **Figma** (for design prototyping)
 
 ## VIDEO DEMO 🎥  
-Check out a short demo of the app in action:  
-👉 [Insert your demo video link here, e.g. YouTube or direct upload]
+Check out a short demo of the app in action: 
+
+https://github.com/user-attachments/assets/16100b86-0885-410c-95a5-6f1b3fbabdce
+
 
 ---
 
